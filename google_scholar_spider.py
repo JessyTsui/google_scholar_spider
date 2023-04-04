@@ -2,6 +2,7 @@ import argparse
 import datetime
 import os
 import sys
+import time
 import warnings
 from dataclasses import dataclass
 from time import sleep
@@ -11,8 +12,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+from tqdm import tqdm
 
-# Default Parameters
 now = datetime.datetime.now()
 current_year = now.year
 MAX_CSV_FNAME = 255
@@ -27,7 +28,7 @@ ROBOT_KW = ['unusual traffic from your computer network', 'not a robot']
 
 
 @dataclass
-class Config:
+class GoogleScholarConfig:
     keyword: str = "machine learning"
     nresults: int = 50
     save_csv: bool = True
@@ -39,31 +40,31 @@ class Config:
     debug: bool = False
 
 
-def google_scholar_spider():
-    # Get command line arguments
-    config = get_command_line_args()
-
+def google_scholar_spider(GoogleScholarConfig: GoogleScholarConfig):
     # Create main URL based on command line arguments
-    gscholar_main_url = create_main_url(config)
+    gscholar_main_url = create_main_url(GoogleScholarConfig)
 
     # Start new session
     session = requests.Session()
 
-    data = fetch_data(config, session, gscholar_main_url)
+    # data = fetch_data(GoogleScholarConfig, session, gscholar_main_url)
+    with tqdm(total=GoogleScholarConfig.nresults) as pbar:
+        # Call fetch_data() with pbar argument
+        data = fetch_data(GoogleScholarConfig, session, gscholar_main_url, pbar)
 
     # Create a dataset and sort by the number of citations
-    data_ranked = process_data(data, config.end_year, config.sortby)
+    data_ranked = process_data(data, GoogleScholarConfig.end_year, GoogleScholarConfig.sortby)
 
     # Plot by citation number
-    if config.plot_results:
-        plot_results(data_ranked.index, data_ranked["Citations"], config.keyword)
+    if GoogleScholarConfig.plot_results:
+        plot_results(data_ranked.index, data_ranked["Citations"], GoogleScholarConfig.keyword)
 
     # Save results
-    if config.save_csv:
-        save_data_to_csv(data_ranked, config.csvpath, config.keyword)
+    if GoogleScholarConfig.save_csv:
+        save_data_to_csv(data_ranked, GoogleScholarConfig.csvpath, GoogleScholarConfig.keyword)
 
 
-def get_command_line_args() -> Config:
+def get_command_line_args() -> GoogleScholarConfig:
     parser = argparse.ArgumentParser(description='Arguments')
     parser.add_argument('--kw', type=str,
                         help="""Keyword to be searched. Use double quote followed by simple quote to search for an exact keyword. Example: "'exact keyword'" """)
@@ -84,15 +85,15 @@ def get_command_line_args() -> Config:
 
     args, _ = parser.parse_known_args()
 
-    return Config(
-        keyword=args.kw if args.kw else Config.keyword,
-        nresults=args.nresults if args.nresults else Config.nresults,
+    return GoogleScholarConfig(
+        keyword=args.kw if args.kw else GoogleScholarConfig.keyword,
+        nresults=args.nresults if args.nresults else GoogleScholarConfig.nresults,
         save_csv=not args.notsavecsv,
-        csvpath=args.csvpath if args.csvpath else Config.csvpath,
-        sortby=args.sortby if args.sortby else Config.sortby,
+        csvpath=args.csvpath if args.csvpath else GoogleScholarConfig.csvpath,
+        sortby=args.sortby if args.sortby else GoogleScholarConfig.sortby,
         plot_results=args.plotresults,
-        start_year=args.startyear if args.startyear else Config.start_year,
-        end_year=args.endyear if args.endyear else Config.end_year,
+        start_year=args.startyear if args.startyear else GoogleScholarConfig.start_year,
+        end_year=args.endyear if args.endyear else GoogleScholarConfig.end_year,
         debug=args.debug
     )
 
@@ -105,7 +106,6 @@ def get_citations(content):
     return int(content[citation_start + 9:citation_end])
 
 
-
 def get_year(content):
     for char in range(0, len(content)):
         if content[char] == '-':
@@ -113,6 +113,7 @@ def get_year(content):
     if not out.isdigit():
         out = 0
     return int(out)
+
 
 def setup_driver():
     try:
@@ -166,22 +167,23 @@ def get_content_with_selenium(url):
     return content.encode('utf-8')
 
 
-def create_main_url(config: Config) -> str:
-    if config.start_year:
-        gscholar_main_url = GSCHOLAR_URL + STARTYEAR_URL.format(config.start_year)
+def create_main_url(GoogleScholarConfig: GoogleScholarConfig) -> str:
+    if GoogleScholarConfig.start_year:
+        gscholar_main_url = GSCHOLAR_URL + STARTYEAR_URL.format(GoogleScholarConfig.start_year)
     else:
         gscholar_main_url = GSCHOLAR_URL
 
-    if config.end_year != current_year:
-        gscholar_main_url = gscholar_main_url + ENDYEAR_URL.format(config.end_year)
+    if GoogleScholarConfig.end_year != current_year:
+        gscholar_main_url = gscholar_main_url + ENDYEAR_URL.format(GoogleScholarConfig.end_year)
 
-    if config.debug:
+    if GoogleScholarConfig.debug:
         gscholar_main_url = 'https://web.archive.org/web/20210314203256/' + GSCHOLAR_URL
 
     return gscholar_main_url
 
 
-def fetch_data(config: Config, session: requests.Session, gscholar_main_url: str) -> pd.DataFrame:
+def fetch_data(GoogleScholarConfig: GoogleScholarConfig, session: requests.Session, gscholar_main_url: str,
+               pbar: None) -> pd.DataFrame:
     links: List[str] = []
     title: List[str] = []
     citations: List[int] = []
@@ -190,10 +192,19 @@ def fetch_data(config: Config, session: requests.Session, gscholar_main_url: str
     venue: List[str] = []
     publisher: List[str] = []
     rank: List[int] = [0]
+
+    # Initialize progress bar
+    if pbar is not None:
+        pbar.reset(total=GoogleScholarConfig.nresults)
+
     # Get content from number_of_results URLs
-    for n in range(0, config.nresults, 10):
-        url = gscholar_main_url.format(str(n), config.keyword.replace(' ', '+'))
-        if config.debug:
+    for n in range(0, GoogleScholarConfig.nresults, 10):
+
+        if pbar is not None:
+            pbar.update(10)
+
+        url = gscholar_main_url.format(str(n), GoogleScholarConfig.keyword.replace(' ', '+'))
+        if GoogleScholarConfig.debug:
             print("Opening URL:", url)
 
         # print("Loading next {} results".format(n + 10))
@@ -296,4 +307,14 @@ def save_data_to_csv(data: pd.DataFrame, path: str, keyword: str) -> None:
 
 
 if __name__ == '__main__':
-    google_scholar_spider()
+    print("Getting command line arguments...")
+    start = time.time()
+    GoogleScholarConfig = get_command_line_args()
+    print("Running Google Scholar spider...")
+    google_scholar_spider(GoogleScholarConfig=GoogleScholarConfig)
+    # with tqdm(total=GoogleScholarConfig.nresults) as pbar:
+    #     google_scholar_spider(GoogleScholarConfig=GoogleScholarConfig, pbar=pbar)
+
+    end = time.time()
+    print("Finished running Google Scholar spider!")
+    print(f"Time taken: {end - start:.2f} seconds")
