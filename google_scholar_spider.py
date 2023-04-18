@@ -139,7 +139,8 @@ def get_author(content):
 def get_element(driver, xpath, attempts=5, count=0):
     '''Safe get_element method with multiple attempts'''
     try:
-        element = driver.find_element_by_xpath(xpath)
+        # Selenium just removed find_element_by_xpath in version 4.3.0.
+        element = driver.find_element("xpath", xpath) 
         return element
     except Exception as e:
         if count < attempts:
