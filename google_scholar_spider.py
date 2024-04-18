@@ -193,6 +193,7 @@ def fetch_data(GoogleScholarConfig: GoogleScholarConfig, session: requests.Sessi
     venue: List[str] = []
     publisher: List[str] = []
     rank: List[int] = [0]
+    describe: List[str] = []
 
     # Initialize progress bar
     if pbar is not None:
@@ -263,14 +264,19 @@ def fetch_data(GoogleScholarConfig: GoogleScholarConfig, session: requests.Sessi
                 venue.append(" ".join(div.find('div', {'class': 'gs_a'}).text.split("-")[-2].split(",")[:-1]))
             except:
                 venue.append("Venue not fount")
+            
+            try:
+                describe.append(get_author(div.find('div', {'class': 'gs_rs'}).text))
+            except:
+                describe.append("Venue not fount")
 
             rank.append(rank[-1] + 10)
 
         # Delay
         sleep(0.5)
     # Create a dataset
-    data = pd.DataFrame(list(zip(author, title, citations, year, publisher, venue, links)), index=rank[1:],
-                        columns=['Author', 'Title', 'Citations', 'Year', 'Publisher', 'Venue', 'Source'])
+    data = pd.DataFrame(list(zip(author, title, citations, year, publisher, venue, describe, links)), index=rank[1:],
+                        columns=['Author', 'Title', 'Citations', 'Year', 'Publisher', 'Venue', 'describe','Source'])
     data.index.name = 'Rank'
     return data
 
