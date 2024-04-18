@@ -268,7 +268,7 @@ def fetch_data(GoogleScholarConfig: GoogleScholarConfig, session: requests.Sessi
             try:
                 describe.append(get_author(div.find('div', {'class': 'gs_rs'}).text))
             except:
-                describe.append("Venue not fount")
+                describe.append("Describe not fount")
 
             rank.append(rank[-1] + 10)
 
@@ -276,7 +276,7 @@ def fetch_data(GoogleScholarConfig: GoogleScholarConfig, session: requests.Sessi
         sleep(0.5)
     # Create a dataset
     data = pd.DataFrame(list(zip(author, title, citations, year, publisher, venue, describe, links)), index=rank[1:],
-                        columns=['Author', 'Title', 'Citations', 'Year', 'Publisher', 'Venue', 'describe','Source'])
+                        columns=['Author', 'Title', 'Citations', 'Year', 'Publisher', 'Venue', 'describe', 'Source'])
     data.index.name = 'Rank'
     return data
 
