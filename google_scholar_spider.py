@@ -3,6 +3,7 @@ import datetime
 import os
 import sys
 import time
+import random
 import warnings
 from dataclasses import dataclass
 from time import sleep
@@ -38,6 +39,7 @@ class GoogleScholarConfig:
     start_year: Optional[int] = None
     end_year: int = current_year
     debug: bool = False
+    use_proxies: bool = False
 
 
 def google_scholar_spider(GoogleScholarConfig: GoogleScholarConfig):
@@ -46,6 +48,51 @@ def google_scholar_spider(GoogleScholarConfig: GoogleScholarConfig):
 
     # Start new session
     session = requests.Session()
+
+    if GoogleScholarConfig.use_proxies:
+        # Set proxies
+        proxies = {
+            'http': 'http://127.0.0.1:10808',
+            'https': 'http://127.0.0.1:10808',
+            # 'all': 'socks5://127.0.0.1:10808' # requests library does not directly support SOCKS proxies without an additional library like PySocks
+        }
+        session.proxies.update(proxies)
+        print("Using proxies...") # Optional: for user feedback
+    else:
+        print("Not using proxies...") # Optional: for user feedback
+
+    # Add random user-agent and other headers
+    user_agents = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:126.0) Gecko/20100101 Firefox/126.0",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:126.0) Gecko/20100101 Firefox/126.0",
+        "Mozilla/5.0 (Linux; Android 14; SM-S918B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36",
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1 Safari/605.1.15",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 OPR/110.0.0.0",
+        "Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36",
+        "Mozilla/5.0 (Android 14; Mobile; rv:126.0) Gecko/126.0 Firefox/126.0"
+    ]
+    
+    headers = {
+        'User-Agent': random.choice(user_agents),
+        'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        'Connection': 'keep-alive'
+    }
+    session.headers.update(headers)
 
     # data = fetch_data(GoogleScholarConfig, session, gscholar_main_url)
     with tqdm(total=GoogleScholarConfig.nresults) as pbar:
@@ -82,6 +129,8 @@ def get_command_line_args() -> GoogleScholarConfig:
     parser.add_argument('--endyear', type=int, help='End year when searching. Default is current year')
     parser.add_argument('--debug', action='store_true',
                         help='Debug mode. Used for unit testing. It will get pages stored on web archive')
+    parser.add_argument('--use_proxies', action='store_true',
+                        help='Use proxies for requests. Default is False')
 
     args, _ = parser.parse_known_args()
 
@@ -94,7 +143,8 @@ def get_command_line_args() -> GoogleScholarConfig:
         plot_results=args.plotresults,
         start_year=args.startyear if args.startyear else GoogleScholarConfig.start_year,
         end_year=args.endyear if args.endyear else GoogleScholarConfig.end_year,
-        debug=args.debug
+        debug=args.debug,
+        use_proxies=args.use_proxies
     )
 
 
@@ -225,7 +275,7 @@ def fetch_data(GoogleScholarConfig: GoogleScholarConfig, session: requests.Sessi
         soup = BeautifulSoup(c, 'html.parser', from_encoding='utf-8')
 
         # Get stuff
-        mydivs = soup.findAll("div", {"class": "gs_or"})
+        mydivs = soup.find_all("div", {"class": "gs_or"})
 
         for div in mydivs:
             try:
@@ -272,8 +322,8 @@ def fetch_data(GoogleScholarConfig: GoogleScholarConfig, session: requests.Sessi
 
             rank.append(rank[-1] + 10)
 
-        # Delay
-        sleep(0.5)
+        # Delay with random interval
+        sleep(random.uniform(0.5, 1.5))
     # Create a dataset
     data = pd.DataFrame(list(zip(author, title, citations, year, publisher, venue, describe, links)), index=rank[1:],
                         columns=['Author', 'Title', 'Citations', 'Year', 'Publisher', 'Venue', 'describe', 'Source'])
