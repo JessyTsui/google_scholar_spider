@@ -26,7 +26,7 @@ const Layout = ({ children }: LayoutProps) => {
               <Link to="/" className="flex items-center space-x-2">
                 <Search className="h-8 w-8 text-primary-600" />
                 <span className="text-xl font-bold text-gray-900 dark:text-white">
-                  Scholar Spider
+                  ScholarDock
                 </span>
               </Link>
               
@@ -53,7 +53,7 @@ const Layout = ({ children }: LayoutProps) => {
 
             <div className="flex items-center space-x-4">
               <a
-                href="https://github.com/houseofcat/google_scholar_spider"
+                href="https://github.com/JessyTsui/scholardock"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
@@ -91,7 +91,7 @@ const Layout = ({ children }: LayoutProps) => {
       <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-            © 2024 Google Scholar Spider. For educational purposes only.
+            © 2025 ScholarDock. For educational purposes only.
           </p>
         </div>
       </footer>

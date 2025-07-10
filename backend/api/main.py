@@ -9,7 +9,7 @@ from typing import List, Optional
 
 from core.config import settings
 from core.database import init_db, get_db
-from models.article import SearchRequest, SearchResponse, SearchDB, ArticleDB, SearchSchema
+from models.article import SearchRequest, SearchResponse, SearchDB, ArticleDB, SearchSchema, ArticleSchema
 from services.original_spider import OriginalScholarSpider
 from services.export import ExportService
 
@@ -208,3 +208,5 @@ async def delete_search(
     await db.commit()
     
     return {"message": "Search deleted successfully"}
+
+

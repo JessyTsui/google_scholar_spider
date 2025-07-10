@@ -2,10 +2,9 @@ from datetime import datetime
 from typing import Optional, List
 from pydantic import BaseModel, Field
 from sqlalchemy import Column, Integer, String, DateTime, Float, Text, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
-Base = declarative_base()
+from models.base import Base
 
 
 class ArticleDB(Base):
@@ -13,7 +12,8 @@ class ArticleDB(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(500), nullable=False)
-    authors = Column(Text)
+    authors = Column(Text)  # 原始作者字符串
+    # main_author_id = Column(Integer, ForeignKey("authors.id"))  # 第一作者ID
     venue = Column(String(300))
     publisher = Column(String(200))
     year = Column(Integer)
@@ -25,6 +25,7 @@ class ArticleDB(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     
     search = relationship("SearchDB", back_populates="articles")
+    # author_obj = relationship("AuthorDB", back_populates="papers")
 
 
 class SearchDB(Base):

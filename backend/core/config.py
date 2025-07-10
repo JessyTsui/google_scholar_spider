@@ -7,7 +7,7 @@ import os
 
 
 class Settings(BaseSettings):
-    app_name: str = "Google Scholar Spider API"
+    app_name: str = "ScholarDock API"
     app_version: str = "2.0.0"
     debug: bool = False
     

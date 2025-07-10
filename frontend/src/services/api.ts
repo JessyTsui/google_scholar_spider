@@ -47,6 +47,7 @@ export interface Search {
   articles?: Article[]
 }
 
+
 export const searchAPI = {
   search: async (params: SearchRequest): Promise<SearchResponse> => {
     const { data } = await api.post<SearchResponse>('/search', params)
@@ -75,5 +76,6 @@ export const searchAPI = {
     return data
   },
 }
+
 
 export default api

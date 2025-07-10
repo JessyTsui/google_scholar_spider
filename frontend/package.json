@@ -1,5 +1,5 @@
 {
-  "name": "google-scholar-spider-frontend",
+  "name": "scholardock-frontend",
   "private": true,
   "version": "2.0.0",
   "type": "module",
@@ -10,17 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@heroicons/react": "^2.2.0",
     "axios": "^1.6.5",
-    "react-router-dom": "^6.21.2",
-    "react-query": "^3.39.3",
     "chart.js": "^4.4.1",
-    "react-chartjs-2": "^5.2.0",
+    "date-fns": "^3.2.0",
     "framer-motion": "^10.18.0",
-    "react-hot-toast": "^2.4.1",
     "lucide-react": "^0.311.0",
-    "date-fns": "^3.2.0"
+    "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.21.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

@@ -1,4 +1,4 @@
-# Google Scholar Spider 2.0
+# ScholarDock
 
 <p align="center">
   <a href="README.md">English</a> •
@@ -60,8 +60,8 @@ A modern, full-stack web application for searching and analyzing academic articl
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/houseofcat/google_scholar_spider.git
-cd google_scholar_spider
+git clone https://github.com/JessyTsui/scholardock.git
+cd scholardock
 ```
 
 ### 2. Setup Backend
@@ -138,7 +138,7 @@ Once the backend is running, visit `http://localhost:8001/docs` for interactive 
 ## 🏗️ Project Structure
 
 ```
-google_scholar_spider/
+scholardock/
 ├── backend/
 │   ├── api/
 │   │   └── main.py          # FastAPI application
@@ -221,4 +221,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-For issues and feature requests, please use the [GitHub Issues](https://github.com/houseofcat/google_scholar_spider/issues) page.
+For issues and feature requests, please use the [GitHub Issues](https://github.com/JessyTsui/scholardock/issues) page.

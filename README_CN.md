@@ -1,4 +1,4 @@
-# Google Scholar Spider 2.0 - 学术文献搜索分析系统
+# ScholarDock - 学术文献搜索分析系统
 
 <p align="center">
   <a href="README.md">English</a> •
@@ -8,7 +8,7 @@
 
 ## 📖 简介
 
-Google Scholar Spider 是一个现代化的学术文献搜索分析系统，能够从 Google Scholar 获取学术论文数据，并提供强大的分析和可视化功能。
+ScholarDock 是一个现代化的学术文献搜索分析系统，能够从 Google Scholar 获取学术论文数据，并提供强大的分析和可视化功能。
 
 ### ✨ 主要特性
 
@@ -44,8 +44,8 @@ Google Scholar Spider 是一个现代化的学术文献搜索分析系统，能�
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/houseofcat/google_scholar_spider.git
-cd google_scholar_spider
+git clone https://github.com/JessyTsui/scholardock.git
+cd scholardock
 ```
 
 ### 2. 安装依赖
@@ -168,4 +168,4 @@ USE_SELENIUM_FALLBACK=true
 
 ## 📞 联系方式
 
-问题和功能请求请使用 [GitHub Issues](https://github.com/houseofcat/google_scholar_spider/issues)。
+问题和功能请求请使用 [GitHub Issues](https://github.com/JessyTsui/scholardock/issues)。
