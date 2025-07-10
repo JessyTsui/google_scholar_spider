@@ -18,7 +18,7 @@ A modern, full-stack web application for searching and analyzing academic articl
 ![Homepage](docs/screenshots/homepage.png)
 
 ### Search Results with Data Visualization
-![Search Results](docs/screenshots/search-results.png)
+![Search Results](docs/screenshots/search_results.png)
 
 ## ✨ Features
 

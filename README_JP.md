@@ -24,7 +24,7 @@ ScholarDockは、Google Scholarから学術論文データを取得し、強力�
 ![ホームページ](docs/screenshots/homepage.png)
 
 ### 検索結果とデータ可視化
-![検索結果](docs/screenshots/search-results.png)
+![検索結果](docs/screenshots/search_results.png)
 
 ## 🛠️ 技術スタック
 

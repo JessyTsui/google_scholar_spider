@@ -24,7 +24,7 @@ ScholarDock 是一个现代化的学术文献搜索分析系统，能够从 Goog
 ![首页](docs/screenshots/homepage.png)
 
 ### 搜索结果与数据可视化
-![搜索结果](docs/screenshots/search-results.png)
+![搜索结果](docs/screenshots/search_results.png)
 
 ## 🛠️ 技术栈
 
