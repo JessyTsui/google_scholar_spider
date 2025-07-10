@@ -185,23 +185,6 @@ Edit `frontend/vite.config.ts` for proxy settings and development server configu
 4. **Export Data**: Download results in your preferred format
 5. **Manage History**: Access and manage previous searches
 
-## ⚠️ Important Notes
-
-- This tool is for educational and research purposes only
-- Respect Google Scholar's terms of service
-- Use reasonable delays between requests to avoid rate limiting
-
-### 🔍 搜索功能说明
-
-由于Google Scholar有严格的反爬虫机制，当真实搜索被阻止时，系统会自动切换到模拟数据模式，确保你能体验完整的应用功能。详情请查看 [SEARCH_STATUS.md](SEARCH_STATUS.md)。
-
-**模拟数据模式支持所有功能**：
-- ✅ 搜索和排序
-- ✅ 数据可视化
-- ✅ 高级筛选
-- ✅ 多格式导出
-- ✅ 搜索历史管理
-
 ## 🐛 Troubleshooting
 
 ### Common Issues
@@ -232,7 +215,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Original spider implementation by [houseofcat](https://github.com/houseofcat)
 - FastAPI for the excellent web framework
 - React and TypeScript communities
 - All contributors to this project

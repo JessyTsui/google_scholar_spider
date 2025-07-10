@@ -129,12 +129,6 @@ USE_SELENIUM_FALLBACK=true
 
 编辑 `frontend/vite.config.ts` 配置代理和端口。
 
-## ⚠️ 注意事项
-
-1. **学术用途**：本工具仅供学术研究使用
-2. **访问频率**：请合理控制搜索频率，避免被封禁
-3. **验证码**：遇到验证码时，需要手动在弹出的浏览器中解决
-
 ## 🐛 常见问题
 
 ### 搜索无结果
@@ -168,7 +162,6 @@ USE_SELENIUM_FALLBACK=true
 
 ## 👏 致谢
 
-- 原始爬虫实现：[houseofcat](https://github.com/houseofcat)
 - FastAPI 框架
 - React 社区
 - 所有贡献者
