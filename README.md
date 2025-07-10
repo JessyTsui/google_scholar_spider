@@ -1,45 +1,242 @@
-# Google Scholar Spider Documentation
+# Google Scholar Spider 2.0
 
-Google Scholar Spider是一个基于Python的工具，根据给定的关键字检索Google Scholar上发表的文章数据。它允许用户将结果保存为CSV文件，绘制结果，并通过年份和引用次数过滤结果。
+<p align="center">
+  <a href="README.md">English</a> •
+  <a href="README_CN.md">中文</a> •
+  <a href="README_JP.md">日本語</a>
+</p>
 
-## News
+A modern, full-stack web application for searching and analyzing academic articles from Google Scholar. Built with FastAPI backend and React TypeScript frontend.
 
-本仓库是2023年在训练学术大模型的时候，顺手写的谷歌学术爬虫，之后这个项目基本搁置了，但爬虫的价值还是很大的，如果有人有相关意向或者想对本仓库进行大翻新，可以联系我微信:db277500。
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+![React](https://img.shields.io/badge/react-18.2+-blue.svg)
 
-另外最近在做出海的AI SaaS产品，建了一个小的交流群，欢迎加入
+## 📸 Screenshots
 
-![](https://raw.githubusercontent.com/JessyTsu1/JessyTsu1/main/images/AI_saas_group.jpg)
+### Homepage
+![Homepage](docs/screenshots/homepage.png)
 
-## Usage
+### Search Results with Data Visualization
+![Search Results](docs/screenshots/search-results.png)
 
-可以通过运行命令行中的`google_scholar_spider`函数并传递任何所需的参数来使用Google Scholar Spider。可用的参数包括：
+## ✨ Features
 
---**kw** <keyword> (default "machine learning") 要搜索的关键字。
+### 🔍 Advanced Search
+- Search Google Scholar with customizable parameters
+- Filter by publication year range
+- Sort results by citations, citations per year, or publication year
+- Support for up to 1000 results per search
 
---**nresults** <number of results> (default 50) 要在Google Scholar上搜索的文章数。
+### 📊 Data Visualization
+- Interactive charts showing citation trends over time
+- Publication distribution analysis
+- Real-time data filtering and exploration
 
---**notsavecsv** 使用此标志以不保存结果到CSV文件的方式打印结果。
+### 💾 Data Management
+- Search history with SQLite database storage
+- Export results in multiple formats (CSV, JSON, Excel, BibTeX)
+- Delete and manage previous searches
 
---**csvpath** <path> 要保存导出的CSV文件的路径。默认为当前文件夹。
+### 🎨 Modern UI/UX
+- Responsive design with Tailwind CSS
+- Dark mode support
+- Smooth animations with Framer Motion
+- Real-time search progress indicators
 
---**sortby** <column> (default "Citations") 按列排序数据。如果要按每年引用次数排序，请使用--sortby "cit/year"。
+### 🚀 Performance
+- Asynchronous backend with FastAPI
+- Efficient data fetching with React Query
+- Automatic retry mechanism for failed requests
+- Selenium fallback for CAPTCHA handling
 
---**plotresults** 使用此标志以原始排名在x轴上，引用次数在y轴上绘制结果。
+## 📋 Prerequisites
 
---**startyear** <year> 搜索文章的起始年份。
+- Python 3.8+
+- Node.js 16+
+- Chrome/Chromium browser (for Selenium fallback)
 
---**endyear** <year> (default current year) 搜索文章的结束年份。
+## 🛠️ Installation
 
---**debug** 使用此标志启用调试模式。调试模式用于单元测试并将页面存储在网络档案库中。
+### 1. Clone the repository
+```bash
+git clone https://github.com/houseofcat/google_scholar_spider.git
+cd google_scholar_spider
+```
 
-## Examples
+### 2. Setup Backend
+
+```bash
+cd backend
+pip install -r requirements.txt
+```
+
+Create a `.env` file in the backend directory (optional):
+```env
+DEBUG=false
+DATABASE_URL=sqlite+aiosqlite:///./data/scholar.db
+USE_SELENIUM_FALLBACK=true
+```
+
+### 3. Setup Frontend
+
+```bash
+cd ../frontend
+npm install
+```
+
+## 🚀 Running the Application
+
+### Quick Start (Recommended)
+
+```bash
+# Start both frontend and backend
+./run.sh
+
+# Stop all services
+./stop.sh
+```
+
+### Advanced Start with Monitoring
+
+```bash
+# Start with process monitoring and colored output
+./dev-server.sh
+```
+
+### Manual Start
+
+```bash
+# Terminal 1 - Backend
+cd backend
+python run.py
+
+# Terminal 2 - Frontend  
+cd frontend
+npm run dev
+```
+
+### Service URLs
+
+The services will be available at:
+- Frontend: `http://localhost:3000`
+- Backend API: `http://localhost:8001`
+- API Documentation: `http://localhost:8001/docs`
+
+## 📖 API Documentation
+
+Once the backend is running, visit `http://localhost:8001/docs` for interactive API documentation.
+
+### Main Endpoints
+
+- `POST /api/search` - Perform a new search
+- `GET /api/searches` - Get search history
+- `GET /api/search/{search_id}` - Get search details
+- `GET /api/export/{search_id}` - Export search results
+- `DELETE /api/search/{search_id}` - Delete a search
+
+## 🏗️ Project Structure
 
 ```
-python google_scholar_spider.py --kw "deep learning" --nresults 30 --csvpath "./data" --sortby "cit/year" --plotresults 1
+google_scholar_spider/
+├── backend/
+│   ├── api/
+│   │   └── main.py          # FastAPI application
+│   ├── core/
+│   │   ├── config.py        # Configuration settings
+│   │   └── database.py      # Database setup
+│   ├── models/
+│   │   └── article.py       # Data models
+│   ├── services/
+│   │   ├── spider.py        # Web scraping logic
+│   │   └── export.py        # Export functionality
+│   └── run.py               # Backend entry point
+├── frontend/
+│   ├── src/
+│   │   ├── components/      # React components
+│   │   ├── pages/           # Page components
+│   │   ├── services/        # API services
+│   │   └── contexts/        # React contexts
+│   └── package.json
+├── data/                    # SQLite database storage
+└── README.md
 ```
 
-此命令在Google Scholar上搜索与“deep learning”相关的文章，检索30个结果，将结果保存到“./data”文件夹中的CSV文件中，按每年引用次数排序数据，并绘制结果。
+## 🔧 Configuration
 
-## License
+### Backend Configuration
 
-Google Scholar Spider根据MIT许可证发布。
+Edit `backend/core/config.py` or create a `.env` file:
+
+- `DATABASE_URL`: SQLite database connection string
+- `REQUEST_DELAY`: Delay between requests (default: 0.5s)
+- `MAX_RETRIES`: Maximum retry attempts (default: 3)
+- `USE_SELENIUM_FALLBACK`: Enable Selenium for CAPTCHA (default: true)
+
+### Frontend Configuration
+
+Edit `frontend/vite.config.ts` for proxy settings and development server configuration.
+
+## 🎯 Usage
+
+1. **Search Articles**: Enter keywords and optional filters on the search page
+2. **View Results**: Browse articles with citation counts and publication details
+3. **Visualize Data**: Analyze citation trends with interactive charts
+4. **Export Data**: Download results in your preferred format
+5. **Manage History**: Access and manage previous searches
+
+## ⚠️ Important Notes
+
+- This tool is for educational and research purposes only
+- Respect Google Scholar's terms of service
+- Use reasonable delays between requests to avoid rate limiting
+
+### 🔍 搜索功能说明
+
+由于Google Scholar有严格的反爬虫机制，当真实搜索被阻止时，系统会自动切换到模拟数据模式，确保你能体验完整的应用功能。详情请查看 [SEARCH_STATUS.md](SEARCH_STATUS.md)。
+
+**模拟数据模式支持所有功能**：
+- ✅ 搜索和排序
+- ✅ 数据可视化
+- ✅ 高级筛选
+- ✅ 多格式导出
+- ✅ 搜索历史管理
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **CAPTCHA Detection**
+   - The application will automatically open a browser for manual CAPTCHA solving
+   - Ensure Chrome/Chromium is installed
+
+2. **Rate Limiting**
+   - Increase `REQUEST_DELAY` in configuration
+   - Reduce the number of results per search
+
+3. **Database Errors**
+   - Ensure the `data` directory exists and has write permissions
+   - Check database connection string in configuration
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Original spider implementation by [houseofcat](https://github.com/houseofcat)
+- FastAPI for the excellent web framework
+- React and TypeScript communities
+- All contributors to this project
+
+## 📞 Contact
+
+For issues and feature requests, please use the [GitHub Issues](https://github.com/houseofcat/google_scholar_spider/issues) page.
