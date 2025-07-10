@@ -45,7 +45,7 @@ const SearchPage = () => {
         className="text-center mb-12"
       >
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-          Google Scholar Spider
+          ScholarDock
         </h1>
         <p className="text-lg text-gray-600 dark:text-gray-400">
           Search and analyze academic articles with ease
@@ -170,7 +170,45 @@ const SearchPage = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
-        className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400"
+        className="mt-8 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-lg p-6"
+      >
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 text-center">
+          💬 Join Our Community
+        </h3>
+        <p className="text-sm text-gray-600 dark:text-gray-400 text-center mb-4">
+          Get help, share feedback, and connect with other users
+        </p>
+        <div className="flex flex-wrap justify-center gap-4">
+          <a 
+            href="https://discord.gg/nCnmRBM4"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center space-x-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm transition-colors"
+          >
+            <span>🎮</span>
+            <span>Discord</span>
+          </a>
+          <a 
+            href="https://t.me/ScholarDock"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm transition-colors"
+          >
+            <span>✈️</span>
+            <span>Telegram</span>
+          </a>
+          <span className="inline-flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg text-sm">
+            <span>🐧</span>
+            <span>QQ: 758971907</span>
+          </span>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400"
       >
         <p>This tool is for educational purposes only.</p>
         <p>Please respect Google Scholar's terms of service.</p>

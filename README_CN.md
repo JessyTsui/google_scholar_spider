@@ -166,6 +166,19 @@ USE_SELENIUM_FALLBACK=true
 - React 社区
 - 所有贡献者
 
+## 💬 社区交流
+
+欢迎加入我们的社区，讨论功能特性、获取帮助、分享使用经验：
+
+- 🎮 **Discord**: [https://discord.gg/nCnmRBM4](https://discord.gg/nCnmRBM4)
+- ✈️ **Telegram**: [https://t.me/ScholarDock](https://t.me/ScholarDock)
+- 🐧 **QQ群**: 758971907
+
+<div align="center">
+  <img src="docs/screenshots/qq_group.png" alt="QQ群二维码" width="200">
+  <p><em>扫描二维码加入QQ群</em></p>
+</div>
+
 ## 📞 联系方式
 
 问题和功能请求请使用 [GitHub Issues](https://github.com/JessyTsui/scholardock/issues)。

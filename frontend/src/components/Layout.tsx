@@ -89,10 +89,36 @@ const Layout = ({ children }: LayoutProps) => {
       </main>
 
       <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-            © 2025 ScholarDock. For educational purposes only.
-          </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex flex-col items-center space-y-4">
+            <div className="flex flex-wrap justify-center items-center gap-6 text-sm">
+              <a 
+                href="https://discord.gg/nCnmRBM4"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+              >
+                <span>🎮</span>
+                <span>Discord</span>
+              </a>
+              <a 
+                href="https://t.me/ScholarDock"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+              >
+                <span>✈️</span>
+                <span>Telegram</span>
+              </a>
+              <span className="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                <span>🐧</span>
+                <span>QQ: 758971907</span>
+              </span>
+            </div>
+            <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+              © 2025 ScholarDock. For educational purposes only.
+            </p>
+          </div>
         </div>
       </footer>
     </div>

@@ -166,6 +166,19 @@ IssueとPull Requestの提出を歓迎します！
 - Reactコミュニティ
 - すべての貢献者
 
+## 💬 コミュニティ
+
+機能の議論、ヘルプの取得、体験の共有のためにコミュニティにご参加ください：
+
+- 🎮 **Discord**: [https://discord.gg/nCnmRBM4](https://discord.gg/nCnmRBM4)
+- ✈️ **Telegram**: [https://t.me/ScholarDock](https://t.me/ScholarDock)
+- 🐧 **QQグループ**: 758971907
+
+<div align="center">
+  <img src="docs/screenshots/qq_group.png" alt="QQグループQRコード" width="200">
+  <p><em>QRコードをスキャンしてQQグループに参加</em></p>
+</div>
+
 ## 📞 お問い合わせ
 
 問題や機能リクエストは[GitHub Issues](https://github.com/JessyTsui/scholardock/issues)をご利用ください。

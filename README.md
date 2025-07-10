@@ -219,6 +219,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - React and TypeScript communities
 - All contributors to this project
 
+## 💬 Community
+
+Join our community to discuss features, get help, and share your experience:
+
+- 🎮 **Discord**: [https://discord.gg/nCnmRBM4](https://discord.gg/nCnmRBM4)
+- ✈️ **Telegram**: [https://t.me/ScholarDock](https://t.me/ScholarDock)
+- 🐧 **QQ Group**: 758971907
+
+<div align="center">
+  <img src="docs/screenshots/qq_group.png" alt="QQ Group QR Code" width="200">
+  <p><em>Scan QR code to join QQ Group</em></p>
+</div>
+
 ## 📞 Contact
 
 For issues and feature requests, please use the [GitHub Issues](https://github.com/JessyTsui/scholardock/issues) page.
